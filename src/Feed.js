@@ -6,6 +6,7 @@ import SubscriptionsIcon from '@material-ui/icons/Subscriptions'
 import EventNoteIcon from '@material-ui/icons/EventNote'
 import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay'
 import InputOption from './InputOption'
+import Post from './Post'
 
 function Feed() {
   return (
@@ -30,6 +31,12 @@ function Feed() {
                 color='#7FC15E' />
             </div>
         </div>
+
+        <Post
+          name='Stefan Tumey' 
+          description='This is a test' 
+          message='WOW this worked'
+        />
     </div>
   )
 }
