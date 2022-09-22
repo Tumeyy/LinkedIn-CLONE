@@ -1,37 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import './Feed.css'
-import CreateIcon from '@material-ui/icons/Create'
-import ImageIcon from '@material-ui/icons/Image'
-import SubscriptionsIcon from '@material-ui/icons/Subscriptions'
-import EventNoteIcon from '@material-ui/icons/EventNote'
-import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay'
+import React, { useEffect, useState } from 'react';
+import './Feed.css';
+import CreateIcon from '@material-ui/icons/Create';
+import ImageIcon from '@material-ui/icons/Image';
+import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
+import EventNoteIcon from '@material-ui/icons/EventNote';
+import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import InputOption from './InputOption'
-import Post from './Post'
-import firebase from 'firebase/app'
-import { collection, addDoc } from "firebase/firestore"; 
-import { db } from './firebase'
+import Post from './Post';
+import firebase from 'firebase';
+import { db } from './firebase';
 
 
 function Feed() {
   const [input, setInput] = useState('');
   const [posts, setPosts] = useState([]);
 
- // getPosts
- const postRef = collection(db, "posts");
- const q = query(postRef, orderBy("timestamp", "desc"));
- useEffect(() => {
-   const getPost = onSnapshot(q, (snapshot) => {
-     setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })));
+  useEffect(() => {
+    db.collection('posts')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => ({ 
+            id: doc.id, data: doc.data() 
+          })));
    });
-   return () => {
-     getPost();
-   };
  }, []);
 
   const sendPost = (e) => {
     e.preventDefault();
 
-    addDoc(postRef, {
+    db.collection('posts').add({
       name: "Stefan Tumey",
       description: "This is a test",
       message: input,
@@ -53,7 +51,6 @@ function Feed() {
         <div className='feed__inputContainer'>
             <div className='feed__input'>
                 <CreateIcon />
-
                 <form>
                     <input value={input} onChange={e => setInput(e.target.value)} type='text' />
                     <button onClick={sendPost} type='submit'>Send</button>
