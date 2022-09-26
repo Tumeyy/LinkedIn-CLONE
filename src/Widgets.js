@@ -25,6 +25,7 @@ function Widgets() {
         </div>
         {newsArticle("Stefan React is back", "Top news - 999 readers")}
         {newsArticle("Bitcoin has hit ATH", "Crypto News - 321 readers")}
+        {newsArticle("Covid-19", "World News - 9999 readers")}
     </div>
   )
 }
